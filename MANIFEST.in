@@ -1,0 +1,5 @@
+include LICENSE
+include README.rst
+
+recursive-include i18nurls/locale *
+recursive-include i18nurls/templates *
