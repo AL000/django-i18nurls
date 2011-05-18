@@ -36,7 +36,9 @@ Examples
 Installation
 ------------
 
-* Add ``i18nurls`` to your ``settings.INSTALLED_APPS``
+* Install the ``django-i18nurls`` package (eg: ``pip install django-i18nurls``).
+
+* Add ``i18nurls`` to your ``settings.INSTALLED_APPS``.
 
 * Add ``i18nurls.middleware.LocaleMiddleware`` to your ``settings.MIDDLEWARE_CLASSES``.
   Note: This middleware replaces the default Django LocaleMiddleware.
