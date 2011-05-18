@@ -1,7 +1,6 @@
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.utils import translation
-from django.utils.cache import patch_vary_headers
 
 
 class LocaleMiddleware(object):
@@ -26,7 +25,6 @@ class LocaleMiddleware(object):
         no language-code prefix is found, return a `HttpResponseRedirect` to the
         language-code prefixed `request.path`.
         """
-        patch_vary_headers(response, ('Accept-Language',))
         language_code = translation.get_language()
         translation.deactivate()
         
