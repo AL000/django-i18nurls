@@ -20,7 +20,7 @@ Examples
     
     
     patterns = locale_prefixed_patterns('',
-        url(_(r'^users/register/$', 'your.view', name='account-register')),
+        url(_(r'^users/register/$'), 'your.view', name='account-register'),
     )
     
     # In your shell, after updating your translations (with makemessages / compilemessages)
