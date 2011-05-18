@@ -36,7 +36,8 @@ class I18NRegexURLPattern(RegexURLPattern):
         self._i18n_regex = regex
         self._i18n_regex_dict = {}
     
-    def get_regex(self):
+    @property
+    def regex(self):
         language_code = get_language()
         
         if language_code not in self._i18n_regex_dict:
@@ -53,7 +54,6 @@ class I18NRegexURLPattern(RegexURLPattern):
             self._i18n_regex_dict[language_code] = compiled_regex
         
         return self._i18n_regex_dict[language_code]
-    regex = property(get_regex)
 
 
 class I18NRegexURLResolver(RegexURLResolver):
@@ -80,7 +80,8 @@ class I18NRegexURLResolver(RegexURLResolver):
         self._i18n_namespace_dict = {}
         self._i18n_app_dict = {}
     
-    def get_regex(self):
+    @property
+    def regex(self):
         language_code = get_language()
         
         if language_code not in self._i18n_regex_dict:
@@ -97,7 +98,6 @@ class I18NRegexURLResolver(RegexURLResolver):
             self._i18n_regex_dict[language_code] = compiled_regex
         
         return self._i18n_regex_dict[language_code]
-    regex = property(get_regex)
     
     def _populate(self):
         # Almost the same as the original `_populate` function, except the last
