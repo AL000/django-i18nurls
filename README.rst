@@ -28,7 +28,7 @@ Examples
     >>> reverse('account-register')
     '/nl/gebruikers/registeren/'
     
-    >>> activate('nl')
+    >>> activate('en')
     >>> reverse('account-register')
     '/en/users/register/'
 
