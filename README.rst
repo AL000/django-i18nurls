@@ -19,7 +19,7 @@ Examples
     from i18nurls.defaults import language_prefixed_patterns
     
     
-    patterns = locale_prefixed_patterns('',
+    patterns = language_prefixed_patterns('',
         url(_(r'^users/register/$'), 'your.view', name='account-register'),
     )
     
