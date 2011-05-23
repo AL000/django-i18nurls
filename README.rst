@@ -16,7 +16,7 @@ Examples
     from django.conf.urls.defaults import patterns, include, url
     from django.utils.translation import ugettext_lazy as _
 
-    from i18nurls.defaults import locale_prefixed_patterns
+    from i18nurls.defaults import language_prefixed_patterns
     
     
     patterns = locale_prefixed_patterns('',
