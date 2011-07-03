@@ -2,18 +2,11 @@ import re
 
 from django.core.urlresolvers import RegexURLResolver, RegexURLPattern
 from django.utils.datastructures import MultiValueDict
+from django.utils.encoding import force_unicode
 from django.utils.regex_helper import normalize
 from django.utils.translation import get_language
 
-
-def monkeypatch_class(name, bases, namespace):
-    # Source: http://mail.python.org/pipermail/python-dev/2008-January/076194.html
-    assert len(bases) == 1, "Exactly one base class required"
-    base = bases[0]
-    for name, value in namespace.iteritems():
-        if name != "__metaclass__":
-            setattr(base, name, value)
-    return base
+from i18nurls.monkeypatch import monkeypatch_class
 
 
 class I18NRegexURLPattern(RegexURLPattern):
@@ -44,15 +37,9 @@ class I18NRegexURLPattern(RegexURLPattern):
             if isinstance(self._i18n_regex, basestring):
                 compiled_regex = re.compile(self._i18n_regex, re.UNICODE)
             else:
-                current_language = get_language()
-                if current_language is not language_code:
-                    activate(language_code)
-                regex = unicode(self._i18n_regex)
-                if current_language is not language_code:
-                    activate(current_language)
+                regex = force_unicode(self._i18n_regex)
                 compiled_regex = re.compile(regex, re.UNICODE)
             self._i18n_regex_dict[language_code] = compiled_regex
-        
         return self._i18n_regex_dict[language_code]
 
 
@@ -88,15 +75,9 @@ class I18NRegexURLResolver(RegexURLResolver):
             if isinstance(self._i18n_regex, basestring):
                 compiled_regex = re.compile(self._i18n_regex, re.UNICODE)
             else:
-                current_language = get_language()
-                if current_language is not language_code:
-                    activate(language_code)
-                regex = unicode(self._i18n_regex)
-                if current_language is not language_code:
-                    activate(current_language)
+                regex = force_unicode(self._i18n_regex)
                 compiled_regex = re.compile(regex, re.UNICODE)
             self._i18n_regex_dict[language_code] = compiled_regex
-        
         return self._i18n_regex_dict[language_code]
     
     def _populate(self):
@@ -105,6 +86,7 @@ class I18NRegexURLResolver(RegexURLResolver):
         lookups = MultiValueDict()
         namespaces = {}
         apps = {}
+        language_code = get_language()
         for pattern in reversed(self.url_patterns):
             p_pattern = pattern.regex.pattern
             if p_pattern.startswith('^'):
@@ -132,7 +114,6 @@ class I18NRegexURLResolver(RegexURLResolver):
                 if pattern.name is not None:
                     lookups.appendlist(pattern.name, (bits, p_pattern))
         
-        language_code = get_language()
         self._i18n_reverse_dict[language_code] = lookups
         self._i18n_namespace_dict[language_code] = namespaces
         self._i18n_app_dict[language_code] = apps
@@ -159,23 +140,15 @@ class I18NRegexURLResolver(RegexURLResolver):
     app_dict = property(_get_app_dict)
 
 
-class PrefixedRegexURLResolver(RegexURLResolver):
-    
+class LocaleRegexURLResolver(RegexURLResolver):
     def __init__(self, urlconf_name, default_kwargs=None, app_name=None, namespace=None):
-        regex = None
-        super(PrefixedRegexURLResolver, self).__init__(regex, urlconf_name,
-            default_kwargs, app_name, namespace)
-    
+        super(LocaleRegexURLResolver, self).__init__(
+            None, urlconf_name, default_kwargs, app_name, namespace)
+        
     @property
     def regex(self):
         language_code = get_language()
         if language_code not in self._i18n_regex_dict:
-            regex_compiled = re.compile('^%s/' % language_code)
+            regex_compiled = re.compile('^%s/' % language_code, re.UNICODE)
             self._i18n_regex_dict[language_code] = regex_compiled
         return self._i18n_regex_dict[language_code]
-
-
-class PrefixedURLConf(object):
-    
-    def __init__(self, pattern_list):
-        self.urlpatterns = pattern_list

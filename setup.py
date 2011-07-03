@@ -1,11 +1,9 @@
 from distutils.core import setup
 
 
-version = __import__('i18nurls').__VERSION__
-
 setup(
     name='django-i18nurls',
-    version=version,
+    version='0.6dev',
     author='Orne Brocaar',
     author_email='info@brocaar.com',
     url='http://bitbucket.org/brocaar/django-i18nurls',

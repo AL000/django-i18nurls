@@ -1,4 +1,4 @@
-from i18nurls.urlresolvers import I18NRegexURLPattern, I18NRegexURLResolver
-
-
-__VERSION__ = '0.5.2'
+# Import modules to apply the monkeypatches
+from i18nurls import i18n
+from i18nurls import urlresolvers
+from i18nurls import middleware
