@@ -6,7 +6,7 @@ setup(
     version='0.6dev',
     author='Orne Brocaar',
     author_email='info@brocaar.com',
-    url='http://bitbucket.org/brocaar/django-i18nurls',
+    url='http://github.com/brocaar/django-i18nurls',
     description='Translate URL patterns and prefix URLs with language-code.',
     long_description=open('README.rst').read(),
     license='BSD',
