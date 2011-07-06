@@ -3,7 +3,7 @@ from distutils.core import setup
 
 setup(
     name='django-i18nurls',
-    version='0.6dev',
+    version='0.6',
     author='Orne Brocaar',
     author_email='info@brocaar.com',
     url='http://github.com/brocaar/django-i18nurls',

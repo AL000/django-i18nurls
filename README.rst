@@ -74,8 +74,8 @@ Installation
 Changelog
 ---------
 
-v0.6dev
-~~~~~~~
+v0.6
+~~~~
 
 * API changed so it will match with ``i18n_patterns`` in upcoming Django 1.4 release.
 
