@@ -69,3 +69,27 @@ Installation
 
 * Add ``django.middleware.locale.LocaleMiddleware`` to your ``settings.MIDDLEWARE_CLASSES``
   (if it is not already there, make sure it comes before the ``CommonMiddleware``).
+
+
+Changelog
+---------
+
+v0.6dev
+~~~~~~~
+
+* API changed so it will match with ``i18n_patterns`` in upcoming Django 1.4 release.
+
+v0.5.2
+~~~~~~
+
+* Some README errors corrected.
+
+v0.5.1
+~~~~~~
+
+* Some code cleanup.
+
+v0.5
+~~~~
+
+* Initial release.

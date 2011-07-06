@@ -1,7 +1,6 @@
 from django.conf import settings
 from django.conf.urls.defaults import patterns
 
-
 from i18nurls.urlresolvers import LocaleRegexURLResolver
 
 
