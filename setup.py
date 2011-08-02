@@ -3,7 +3,7 @@ from distutils.core import setup
 
 setup(
     name='django-i18nurls',
-    version='0.6',
+    version='0.6.1',
     author='Orne Brocaar',
     author_email='info@brocaar.com',
     url='http://github.com/brocaar/django-i18nurls',
@@ -14,6 +14,9 @@ setup(
         'i18nurls',
         'i18nurls.tests',
     ],
+    package_data={
+        'i18nurls': ['templates/i18nurls/*', 'locale/en/LC_MESSAGES/*', 'locale/nl/LC_MESSAGES/*'],
+    },
     classifiers=[
         'Development Status :: 4 - Beta',
         'Framework :: Django',

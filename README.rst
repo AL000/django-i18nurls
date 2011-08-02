@@ -74,6 +74,11 @@ Installation
 Changelog
 ---------
 
+v0.6.1
+~~~~~~
+
+* templates and locale folder added to setup.py script (Issue #1).
+
 v0.6
 ~~~~
 
