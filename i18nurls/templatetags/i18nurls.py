@@ -1,26 +1,23 @@
 from django import template
 from django.utils import translation
 
+
 register = template.Library()
 
 
 class override(object):
-    def __init__(self, language, deactivate=False):
+    def __init__(self, language):
         self.language = language
-        self.deactivate = deactivate
         self.old_language = translation.get_language()
 
     def __enter__(self):
-        if self.language is not None:
+        if self.language:
             translation.activate(self.language)
         else:
             translation.deactivate_all()
 
     def __exit__(self, exc_type, exc_value, traceback):
-        if self.deactivate:
-            translation.deactivate()
-        else:
-            translation.activate(self.old_language)
+        translation.activate(self.old_language)
 
 
 class LanguageNode(template.Node):
@@ -48,7 +45,8 @@ def language(parser, token):
     """
     bits = token.split_contents()
     if len(bits) != 2:
-        raise template.TemplateSyntaxError("'%s' takes one argument (language)" % bits[0])
+        raise template.TemplateSyntaxError(
+            "'%s' takes one argument (language)" % bits[0])
     language = parser.compile_filter(bits[1])
     nodelist = parser.parse(('endlanguage',))
     parser.delete_first_token()
