@@ -12,8 +12,8 @@ the right language (based on the language-prefix in the requested URL).
     functionality into the Django core. This patch was accepted and will be
     included in Django 1.4 (thanks to Jannis Leidel and Russell Keith-Magee for
     their feedback and reviewing the patch).
-    
-    
+
+
     In the 0.6 version of this package, I rewrote the API so that it will match
     with the upcoming Django 1.4 version. You can read more about this in the
     `Django documentation (dev) <http://docs.djangoproject.com/en/dev/topics/i18n/internationalization/#specifying-translation-strings-in-url-patterns>`_.
@@ -26,8 +26,8 @@ After installing this package, URL patterns can also be marked translatable
 using the ``ugettext_lazy()`` function. Example::
 
     from django.conf.urls.defaults import patterns, include, url
-    from django.conf.urls.i18n import i18n_patterns
     from django.utils.translation import ugettext_lazy as _
+    from i18nurls.i18n import i18n_patterns
 
     urlpatterns = patterns(''
         url(r'^sitemap\.xml$', 'sitemap.view', name='sitemap_xml'),
