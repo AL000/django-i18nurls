@@ -9,7 +9,3 @@ def i18n_patterns(prefix, *args):
     if not settings.USE_I18N:
         return pattern_list
     return [LocaleRegexURLResolver(pattern_list)]
-
-
-from django.conf.urls import i18n
-setattr(i18n, 'i18n_patterns', i18n_patterns)

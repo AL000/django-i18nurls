@@ -11,9 +11,9 @@ from i18nurls.monkeypatch import monkeypatch_class
 
 class I18NRegexURLPattern(RegexURLPattern):
     # Monkeypatch for the origiginal RegexURLPattern class.
-    
+
     __metaclass__ = monkeypatch_class
-    
+
     def __init__(self, regex, callback, default_args=None, name=None):
         # This is almost the same as django.core.urlresolvers.RegexURLPattern
         # except that we are not going to set self.regex.
@@ -24,15 +24,15 @@ class I18NRegexURLPattern(RegexURLPattern):
             self._callback_str = callback
         self.default_args = default_args or {}
         self.name = name
-        
+
         # Some new variables.
         self._i18n_regex = regex
         self._i18n_regex_dict = {}
-    
+
     @property
     def regex(self):
         language_code = get_language()
-        
+
         if language_code not in self._i18n_regex_dict:
             if isinstance(self._i18n_regex, basestring):
                 compiled_regex = re.compile(self._i18n_regex, re.UNICODE)
@@ -45,13 +45,13 @@ class I18NRegexURLPattern(RegexURLPattern):
 
 class I18NRegexURLResolver(RegexURLResolver):
     # Monkeypatch for the origiginal RegexURLResolver class.
-    
+
     __metaclass__ = monkeypatch_class
-    
+
     def __init__(self, regex, urlconf_name, default_kwargs=None, app_name=None, namespace=None):
         # This is almost the same as django.core.urlresolvers.RegexURLResolver
-        # except that we are not going to set self.regex and we are going to set
-        # some more variables for caching.
+        # except that we are not going to set self.regex and we are going to
+        # set some more variables for caching.
         self.urlconf_name = urlconf_name
         if not isinstance(urlconf_name, basestring):
             self._urlconf_module = self.urlconf_name
@@ -59,18 +59,18 @@ class I18NRegexURLResolver(RegexURLResolver):
         self.default_kwargs = default_kwargs or {}
         self.namespace = namespace
         self.app_name = app_name
-        
+
         # Some new variables
         self._i18n_regex = regex
         self._i18n_regex_dict = {}
         self._i18n_reverse_dict = {}
         self._i18n_namespace_dict = {}
         self._i18n_app_dict = {}
-    
+
     @property
     def regex(self):
         language_code = get_language()
-        
+
         if language_code not in self._i18n_regex_dict:
             if isinstance(self._i18n_regex, basestring):
                 compiled_regex = re.compile(self._i18n_regex, re.UNICODE)
@@ -79,7 +79,7 @@ class I18NRegexURLResolver(RegexURLResolver):
                 compiled_regex = re.compile(regex, re.UNICODE)
             self._i18n_regex_dict[language_code] = compiled_regex
         return self._i18n_regex_dict[language_code]
-    
+
     def _populate(self):
         # Almost the same as the original `_populate` function, except the last
         # 4 lines of code.
@@ -113,25 +113,25 @@ class I18NRegexURLResolver(RegexURLResolver):
                 lookups.appendlist(pattern.callback, (bits, p_pattern))
                 if pattern.name is not None:
                     lookups.appendlist(pattern.name, (bits, p_pattern))
-        
+
         self._i18n_reverse_dict[language_code] = lookups
         self._i18n_namespace_dict[language_code] = namespaces
         self._i18n_app_dict[language_code] = apps
-    
+
     def _get_reverse_dict(self):
         language_code = get_language()
         if language_code not in self._i18n_reverse_dict:
             self._populate()
         return self._i18n_reverse_dict[language_code]
     reverse_dict = property(_get_reverse_dict)
-    
+
     def _get_namespace_dict(self):
         language_code = get_language()
         if language_code not in self._i18n_namespace_dict:
             self._populate()
         return self._i18n_namespace_dict[language_code]
     namespace_dict = property(_get_namespace_dict)
-    
+
     def _get_app_dict(self):
         language_code = get_language()
         if language_code not in self._i18n_app_dict:
@@ -144,7 +144,7 @@ class LocaleRegexURLResolver(RegexURLResolver):
     def __init__(self, urlconf_name, default_kwargs=None, app_name=None, namespace=None):
         super(LocaleRegexURLResolver, self).__init__(
             None, urlconf_name, default_kwargs, app_name, namespace)
-        
+
     @property
     def regex(self):
         language_code = get_language()

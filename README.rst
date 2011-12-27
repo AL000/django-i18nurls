@@ -3,8 +3,8 @@ Django URL internationalization
 
 This Django app makes it possible to prefix URL patterns with the active
 language and to make URL patterns translatable by using gettext. As well this
-package contains a patch for the ``LocaleMiddleware`` so it is able to activate
-the right language (based on the language-prefix in the requested URL).
+package contains a middleware which is able to activate the right language
+(based on the language-prefix in the requested URL).
 
 .. note::
 
@@ -13,10 +13,7 @@ the right language (based on the language-prefix in the requested URL).
     included in Django 1.4 (thanks to Jannis Leidel and Russell Keith-Magee for
     their feedback and reviewing the patch).
 
-
-    In the 0.6 version of this package, I rewrote the API so that it will match
-    with the upcoming Django 1.4 version. You can read more about this in the
-    `Django documentation (dev) <http://docs.djangoproject.com/en/dev/topics/i18n/internationalization/#specifying-translation-strings-in-url-patterns>`_.
+    Django documentation: `Internationalization: in URL patterns <https://docs.djangoproject.com/en/dev/topics/i18n/translation/#internationalization-in-url-patterns>`_.
 
 
 Translating URL patterns
@@ -60,6 +57,28 @@ the URL in the active language. Example::
     '/nl/nieuws/categorie/recent/'
 
 
+Reversing in templates
+----------------------
+
+If localized URLs get reversed in templates they always use the current
+language. To link to a URL in another language use the ``language`` template
+tag. It enables the given language in the enclosed template section::
+
+    {% load i18nurls i18n %}
+
+    {% get_available_languages as languages %}
+
+    {% trans "View this category in:" %}
+        {% for lang_code, lang_name in languages %}
+            {% language lang_code %}
+                <a href="{% url category slug=category.slug %}">{{ lang_name }}</a>
+            {% endlanguage %}
+    {% endfor %}
+
+
+See also: `Reversing in templates <https://docs.djangoproject.com/en/dev/topics/i18n/translation/#std:templatetag-language>`_.
+
+
 Installation
 ------------
 
@@ -67,12 +86,20 @@ Installation
 
 * Add ``i18nurls`` to your ``settings.INSTALLED_APPS``.
 
-* Add ``django.middleware.locale.LocaleMiddleware`` to your ``settings.MIDDLEWARE_CLASSES``
-  (if it is not already there, make sure it comes before the ``CommonMiddleware``).
+* Add ``i18nurls.middleware.LocaleMiddleware`` to your
+  ``settings.MIDDLEWARE_CLASSES`` (make sure it comes before the
+  ``CommonMiddleware``).
 
 
 Changelog
 ---------
+
+v0.7
+~~~~
+
+* ``{% language %}`` template-tag implemented (thanks to Harro van der Klauw).
+* ``LocaleMiddleware`` class is not patched anymore (Issue #3).
+* ``i18n_patterns`` is not patched anymore.
 
 v0.6.1
 ~~~~~~
