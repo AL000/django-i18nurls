@@ -94,8 +94,8 @@ Installation
 Changelog
 ---------
 
-v0.7 (development)
-~~~~~~~~~~~~~~~~~~
+v0.7
+~~~~
 
 * ``{% language %}`` template-tag implemented (thanks to Harro van der Klauw).
 * ``LocaleMiddleware`` class is not patched anymore (Issue #3).
