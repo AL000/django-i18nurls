@@ -19,6 +19,11 @@ urlpatterns = patterns('',
 
 urlpatterns += i18n_patterns('',
     url(
+        r'^$',
+        TemplateView.as_view(template_name='i18nurls/dummy.html'),
+        name='root'
+    ),
+    url(
         r'^prefixed/$',
         TemplateView.as_view(template_name='i18nurls/dummy.html'),
         name='prefixed'

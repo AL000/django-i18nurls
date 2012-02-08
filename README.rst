@@ -100,6 +100,7 @@ v0.7 (development)
 * ``{% language %}`` template-tag implemented (thanks to Harro van der Klauw).
 * ``LocaleMiddleware`` class is not patched anymore (Issue #3).
 * ``i18n_patterns`` is not patched anymore.
+* Trailing slash is now optional in ``LocaleMiddleware`` regex.
 
 v0.6.1
 ~~~~~~

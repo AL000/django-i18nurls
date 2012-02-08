@@ -23,10 +23,10 @@ class BaseTestCase(TestCase):
         )
 
         self._update_setting('MIDDLEWARE_CLASSES', (
+            'i18nurls.middleware.LocaleMiddleware',
             'django.middleware.common.CommonMiddleware',
             'django.contrib.sessions.middleware.SessionMiddleware',
             'django.middleware.csrf.CsrfViewMiddleware',
-            'i18nurls.middleware.LocaleMiddleware',
             'django.contrib.auth.middleware.AuthenticationMiddleware',
             'django.contrib.messages.middleware.MessageMiddleware',
         ))

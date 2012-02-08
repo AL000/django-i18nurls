@@ -10,7 +10,7 @@ from django.utils.cache import patch_vary_headers
 from i18nurls.urlresolvers import LocaleRegexURLResolver
 
 
-language_code_prefix_re = re.compile(r'^/([\w-]+)/')
+language_code_prefix_re = re.compile(r'^/([\w-]+)(/|$)')
 
 
 class LocaleMiddleware(DjangoLocaleMiddleware):

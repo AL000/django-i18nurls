@@ -40,6 +40,20 @@ class NamespaceTest(BaseTestCase):
 
 class RedirectTest(BaseTestCase):
 
+    def test_trailing_slash_redirect_en(self):
+        response = self.client.get('/en', HTTP_ACCEPT_LANGUAGE='nl')
+        self.assertEqual(response.status_code, 301)
+        self.assertEqual(response.has_header('location'), True)
+        self.assertEqual(
+            response['location'], 'http://testserver/en/')
+
+    def test_trailing_slash_redirect_nl(self):
+        response = self.client.get('/nl', HTTP_ACCEPT_LANGUAGE='en')
+        self.assertEqual(response.status_code, 301)
+        self.assertEqual(response.has_header('location'), True)
+        self.assertEqual(
+            response['location'], 'http://testserver/nl/')
+
     def test_en_redirect(self):
         response = self.client.get(
             '/users/register/', HTTP_ACCEPT_LANGUAGE='en')
