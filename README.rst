@@ -94,6 +94,11 @@ Installation
 Changelog
 ---------
 
+v0.7.1 (in development)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* Templates for testing added to package.
+
 v0.7
 ~~~~
 
